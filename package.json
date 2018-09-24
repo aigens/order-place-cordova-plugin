@@ -1,0 +1,19 @@
+{
+  "name": "com.aigens.sdk.cordova",
+  "version": "0.1.0",
+  "description": "",
+  "cordova": {
+    "id": "com.aigens.sdk.cordova",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": "peter.liu@aigens.com",
+  "license": "MIT"
+}

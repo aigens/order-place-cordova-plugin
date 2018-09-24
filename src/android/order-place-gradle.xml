@@ -1,0 +1,4 @@
+dependencies {
+
+    implementation 'com.aigens.order.place:core:0.0.2'
+}
