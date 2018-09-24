@@ -15,11 +15,11 @@
    <platform name="android">
       <config-file parent="/*" target="res/xml/config.xml">
          <feature name="order-place-cordova-plugin">
-            <param name="android-package" value="com.aigens.sdk.plugin" />
+            <param name="android-package" value="order-place-cordova-plugin" />
          </feature>
       </config-file>
       <config-file parent="/*" target="AndroidManifest.xml" />
       <source-file src="src/android/OrderPlaceCordovaPlugin.java" target-dir="src/com/aigens/sdk/plugin" />
-      <framework custom="true" src="src/android/order-place-sdk.gradle" type="gradleReference" />
+      <framework custom="true" src="src/android/order-place-gradle.xml" type="gradleReference" />
    </platform>
 </plugin>
