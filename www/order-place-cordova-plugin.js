@@ -1,5 +1,9 @@
 var exec = require('cordova/exec');
 
-exports.coolMethod = function (arg0, success, error) {
-    exec(success, error, 'order-place-cordova-plugin', 'coolMethod', [arg0]);
+exports.openUrl = function (success, error, args) {
+    exec(success, error, 'order-place-cordova-plugin', 'openUrl', args);
+};
+
+exports.scan = function (success, error, args) {
+    exec(success, error, 'order-place-cordova-plugin', 'scan', args);
 };
