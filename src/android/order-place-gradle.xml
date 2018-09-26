@@ -1,4 +1,5 @@
 dependencies {
 
     implementation 'com.aigens.order.place:core:0.0.3'
+    implementation 'com.aigens.order.place:scan:0.0.3'
 }
