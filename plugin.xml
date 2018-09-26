@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="order-place-cordova-plugin" version="0.1.4">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="order-place-cordova-plugin" version="0.1.5">
    <name>Aigens Order Place SDK</name>
    <js-module name="order-place-cordova-plugin" src="www/order-place-cordova-plugin.js">
       <clobbers target="cordova.plugins.OrderPlace" />
@@ -7,10 +7,10 @@
    <platform name="ios">
       <config-file parent="/*" target="config.xml">
          <feature name="order-place-cordova-plugin">
-            <param name="ios-package" value="order-place-cordova-plugin" />
+            <param name="ios-package" value="OrderPlaceCordovaPlugin" />
          </feature>
       </config-file>
-      <source-file src="src/ios/order-place-cordova-plugin.m" />
+      <source-file src="src/ios/OrderPlaceCordovaPlugin.swift" />
    </platform>
    <platform name="android">
       <config-file parent="/*" target="res/xml/config.xml">
