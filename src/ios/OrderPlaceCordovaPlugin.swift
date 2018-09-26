@@ -1,6 +1,6 @@
 @objc(OrderPlaceCordovaPlugin) class OrderPlaceCordovaPlugin : CDVPlugin {
     
-    func openUrl(command: CDVInvokedUrlCommand) {
+    func openUrl(_ command: CDVInvokedUrlCommand) {
         
         /*
         var pluginResult = CDVPluginResult(
