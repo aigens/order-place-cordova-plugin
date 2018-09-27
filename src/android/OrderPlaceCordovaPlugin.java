@@ -27,15 +27,17 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
         if(action.equals("openUrl")){
 
 
-            String url = args.getString(0);
-            JSONArray features = args.getJSONArray(1);
+            JSONObject params = args.optJSONObject(0);
 
-            OrderPlace.openUrl(cordova.getActivity(), url, toFeatures(features));
+            String url = params.getString("url");
+
+            OrderPlace.openUrl(cordova.getActivity(), url, params);
+
         }else if(action.equals("scan")){
 
-            JSONArray features = args.getJSONArray(0);
+            JSONObject params = args.optJSONObject(0);
 
-            OrderPlace.scan(cordova.getActivity(), toFeatures(features));
+            OrderPlace.scan(cordova.getActivity(), params);
         }else{
 
             //callbackContext.error("no method " + action);
@@ -51,21 +53,6 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
         return true;
     }
 
-    private List<String> toFeatures(JSONArray features){
 
-
-        ArrayList<String> f = new ArrayList<>();
-
-        if(features != null){
-            for(int i = 0; i < features.length(); i++){
-                String feature = features.optString(i, null);
-                if(feature != null){
-                    f.add(feature);
-                }
-            }
-        }
-
-        return f;
-    }
 
 }
