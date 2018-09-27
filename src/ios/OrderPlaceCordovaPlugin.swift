@@ -5,9 +5,8 @@ import UIKit
     
     func openUrl(_ command: CDVInvokedUrlCommand) {
        
-        let url = command.argument(at: 0) as! String
-        let features = command.argument(at: 1) as! NSArray
-        
+        let params = command.argument(at: 0) as! [String: Any]
+       
         let result: [String: String] = [:]
             
         let pluginResult = CDVPluginResult(
@@ -15,11 +14,12 @@ import UIKit
             messageAs: result
         )
         
-        let featureString = features.componentsJoined(by: ",")
+        //let featureString = features.componentsJoined(by: ",")
+        let url = params["url"] as! String;
         
-        print("openUrl", url, featureString)
+        print("openUrl", params)
         
-        OrderPlace.openUrl(caller: self.viewController, url: url, features: featureString)
+        OrderPlace.openUrl(caller: self.viewController, url: url, options: params)
         
         self.commandDelegate!.send(
             pluginResult,
@@ -30,7 +30,7 @@ import UIKit
     
     func scan(_ command: CDVInvokedUrlCommand) {
         
-        let features = command.argument(at: 0) as! NSArray
+        let params = command.argument(at: 0) as! [String: Any]
         
         let result: [String: String] = [:]
         
@@ -39,11 +39,9 @@ import UIKit
             messageAs: result
         )
         
-        let featureString = features.componentsJoined(by: ",")
+        print("scan", params)
         
-        print("scan", featureString)
-        
-        OrderPlace.scan(caller: self.viewController, features: featureString)
+        OrderPlace.scan(caller: self.viewController, options: params)
         
         self.commandDelegate!.send(
             pluginResult,
