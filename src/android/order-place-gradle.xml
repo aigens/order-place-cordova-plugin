@@ -1,6 +1,6 @@
 dependencies {
 
-    compile 'com.aigens.order.place:core:0.0.6'
-    compile 'com.aigens.order.place:scan:0.0.6'
+    compile 'com.aigens.order.place:core:0.0.7'
+    compile 'com.aigens.order.place:scan:0.0.7'
     compile 'com.aigens.order.place:gps:0.0.6'
 }
