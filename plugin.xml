@@ -7,14 +7,92 @@
       -->
       <clobbers target="OrderPlace" />
    </js-module>
-   <platform name="ios">
+
+
+      <platform name="ios">
       <config-file parent="/*" target="config.xml">
          <feature name="order-place-cordova-plugin">
             <param name="ios-package" value="OrderPlaceCordovaPlugin" />
          </feature>
       </config-file>
+
+
+      <preference name="GEOLOCATION_USAGE_DESCRIPTION" default="Enable access for location helps us to show you nearest stores." />
+     <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+        <string>$GEOLOCATION_USAGE_DESCRIPTION</string>
+      </config-file> 
+
+      <preference name="CAMERA_USAGE_DESCRIPTION" default="Enable access of camera to scan QR Code"/>
+      <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+      <string>$CAMERA_USAGE_DESCRIPTION</string>
+    </config-file>
+
+     <preference name="PHOTO_LIBRARY_USAGE" default="Enable access of photos to save images"/>
+    <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription" >
+        <string>$PHOTO_LIBRARY_USAGE</string>
+    </config-file>
+
+    <!-- add url schemes -->
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+		   <dict>
+			  <key>CFBundleTypeRole</key>
+		  	<string>Editor</string>
+			  <key>CFBundleURLSchemes</key>
+		  	<array>
+				  <string>alipaySchemes123</string>
+			  </array>
+		   </dict>
+	   </array>
+    </config-file>
+
+    <!-- add CFBundleURLTypes -->
+     <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+        <dict>
+		      <key>NSAllowsArbitraryLoads</key>
+		      <true/>
+	      </dict>
+    </config-file> 
+
+
       <source-file src="src/ios/OrderPlaceCordovaPlugin.swift" />
-      <framework src="OrderPlaceSdk" type="podspec" spec="~> 0.1.3" />
+      <!-- <framework src="OrderPlaceSdk" type="podspec" spec="~> 0.1.3" /> -->
+
+      <!-- alipay depen -->
+    <framework src="libc++.tbd" />
+    <framework src="libz.tbd" />
+    <framework src="SystemConfiguration.framework" />
+    <framework src="CoreTelephony.framework" />
+    <framework src="QuartzCore.framework" />
+    <framework src="CoreText.framework" />
+    <framework src="CoreGraphics.framework" />
+    <framework src="UIKit.framework" />
+    <framework src="Foundation.framework" />
+    <framework src="CFNetwork.framework" />
+    <framework src="CoreMotion.framework" /> 
+     <!-- order.place  depen-->
+    <framework src="AVFoundation.framework" /> 
+
+
+    <framework src="src/ios/AlipaySDK.framework" custom="true" /> 
+    <resource-file src="src/ios/AlipaySDK.bundle" /> 
+
+    <framework src="src/ios/OrderPlaceSDK.framework" custom="true" /> 
+    <header-file src="src/ios/AppDelegate+OrderPlaceSDK.h" />
+    <source-file src="src/ios/AppDelegate+OrderPlaceSDK.m" />
+
+    <!-- <resource-file src="src/ios/OrderPlace/Assets/OrderPlaceStoryboard.storyboard" />
+    <source-file src="src/ios/OrderPlace/Classes/alipay/AlipayService.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/scan/ScannerService.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/CallbackHandler.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/ConfigService.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/GpsService.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/OrderPlace.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/OrderPlaceService.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/OrderViewController.swift" />
+    <source-file src="src/ios/OrderPlace/Classes/ScannerViewController.swift" /> -->
+
+
    </platform>
    <platform name="android">
       <config-file parent="/*" target="res/xml/config.xml">

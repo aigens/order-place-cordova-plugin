@@ -1,9 +1,11 @@
-import OrderPlaceSdk
+
 import UIKit
+import OrderPlaceSDK
+
 
 @objc(OrderPlaceCordovaPlugin) class OrderPlaceCordovaPlugin : CDVPlugin {
     
-    func openUrl(_ command: CDVInvokedUrlCommand) {
+    @objc(openUrl:) func openUrl(_ command: CDVInvokedUrlCommand) {
        
         let params = command.argument(at: 0) as! [String: Any]
        
@@ -28,7 +30,7 @@ import UIKit
     }
     
     
-    func scan(_ command: CDVInvokedUrlCommand) {
+    @objc(scan:) func scan(_ command: CDVInvokedUrlCommand) {
         
         let params = command.argument(at: 0) as! [String: Any]
         
