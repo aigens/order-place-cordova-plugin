@@ -16,26 +16,6 @@ protocol OrderPlaceDelegate: AnyObject {
     //@objc optional func otherFunction() //optional
 }
 
-//public class OrderPlaceSwift {
-//    static weak var OPDelegate: OrderPlaceDelegate?
-//
-//    public class func openUrl(caller: UIViewController, url: String, options: [String: Any]) {
-//        OrderPlace.openUrl(caller: caller, url: url, options: options);
-//    }
-//
-//    public class func openUrl(caller: UIViewController, url: String, options: [String: Any], services: Array<OrderPlaceService>) {
-//        OrderPlace.openUrl(caller: caller, url: url, options: options, services: services);
-//    }
-//
-//    public class func scan(caller: UIViewController, options: [String: Any]) {
-//        OrderPlace.scan(caller: caller, options: options);
-//    }
-//
-//    public class func application(_ app: UIApplication, open url: URL) {
-//        OrderPlace.application(app, open: url);
-//    }
-//
-//}
 
 @objc public class OrderPlace: NSObject {
 
