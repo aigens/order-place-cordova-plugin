@@ -7,7 +7,7 @@ import OrderPlaceSDK
     
     @objc(openUrl:) func openUrl(_ command: CDVInvokedUrlCommand) {
        
-        let params = command.argument(at: 0) as! [String: Any]
+        guard let params = command.argument(at: 0) as? [String: Any] else {return}
        
         let result: [String: String] = [:]
             
@@ -17,7 +17,7 @@ import OrderPlaceSDK
         )
         
         //let featureString = features.componentsJoined(by: ",")
-        let url = params["url"] as! String;
+        guard let url = params["url"] as? String else {return}
         
         print("openUrl", params)
         

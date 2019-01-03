@@ -2,18 +2,21 @@
 //  AlipaySDK.h
 //  AlipaySDK
 //
-//  Created by alipay on 16-12-12.
-//  Copyright (c) 2016年 Alipay. All rights reserved.
+//  Created by antfin on 17-10-24.
+//  Copyright (c) 2017年 AntFin. All rights reserved.
 //
 
 
 ////////////////////////////////////////////////////////
 ///////////////// 支付宝标准版本支付SDK ///////////////////
-/////////// version:15.3.1  motify:2017.02.20 ///////////
+/////////// version:15.5.7  motify:2018.10.25///////////
 ////////////////////////////////////////////////////////
 
-
+#import <UIKit/UIKit.h>
 #import "APayAuthInfo.h"
+
+typedef void(^CompletionBlock)(NSDictionary *resultDic);
+
 typedef enum {
     ALIPAY_TIDFACTOR_IMEI,
     ALIPAY_TIDFACTOR_IMSI,
@@ -26,8 +29,6 @@ typedef enum {
     ALIPAY_TIDFACTOR_MAX
 } AlipayTidFactor;
 
-typedef void(^CompletionBlock)(NSDictionary *resultDic);
-
 @interface AlipaySDK : NSObject
 
 /**
@@ -37,6 +38,10 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
  */
 + (AlipaySDK *)defaultService;
 
+/**
+ *  用于设置SDK使用的window，如果没有自行创建window无需设置此接口
+ */
+@property (nonatomic, weak) UIWindow *targetWindow;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////支付宝支付相关接口/////////////////////////////////////////////////////
@@ -45,11 +50,26 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
 /**
  *  支付接口
  *
- *  @param orderStr       支付订单信息字串
- *  @param schemeStr      调用支付的app注册在info.plist中的scheme
- *  @param compltionBlock 支付结果回调Block，用于wap支付结果回调（非跳转钱包支付）
+ *  @param orderStr        支付订单信息字串
+ *  @param schemeStr       调用支付的app注册在info.plist中的scheme
+ *  @param completionBlock 支付结果回调Block，用于wap支付结果回调
+                           跳转支付宝支付时只有当processOrderWithPaymentResult接口的completionBlock为nil时会使用这个bolock
  */
 - (void)payOrder:(NSString *)orderStr
+      fromScheme:(NSString *)schemeStr
+        callback:(CompletionBlock)completionBlock;
+
+/**
+ *  支付接口 v2
+ *
+ *  @param orderStr        支付订单信息字串
+ *  @param dynamicLaunch   是否使用动态配置策略跳转支付宝支付
+ *  @param schemeStr       调用支付的app注册在info.plist中的scheme
+ *  @param completionBlock 支付结果回调Block，用于wap支付结果回调
+ 跳转支付宝支付时只有当processOrderWithPaymentResult接口的completionBlock为nil时会使用这个bolock
+ */
+- (void)payOrder:(NSString *)orderStr
+   dynamicLaunch:(BOOL)dynamicLaunch
       fromScheme:(NSString *)schemeStr
         callback:(CompletionBlock)completionBlock;
 
@@ -57,7 +77,7 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
  *  处理支付宝app支付后跳回商户app携带的支付结果Url
  *
  *  @param resultUrl        支付宝app返回的支付结果url
- *  @param completionBlock  支付结果回调
+ *  @param completionBlock  支付结果回调 为nil时默认使用支付接口的completionBlock
  */
 - (void)processOrderWithPaymentResult:(NSURL *)resultUrl
                       standbyCallback:(CompletionBlock)completionBlock;
@@ -100,6 +120,7 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
 //////////////////////////支付宝授权 1.0 相关接口////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+
 /**
  *  快登授权
  *  @param authInfo         授权相关信息
@@ -122,9 +143,19 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////支付宝 h5 支付转 native 支付接口////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ *  从h5链接中获取订单串并支付接口（自版本15.4.0起，推荐使用该接口）
+ *
+ *  @param urlStr     拦截的 url string
+ *
+ *  @return YES为成功获取订单信息并发起支付流程；NO为无法获取订单信息，输入url是普通url
+ */
+- (BOOL)payInterceptorWithUrl:(NSString *)urlStr
+                   fromScheme:(NSString *)schemeStr
+                     callback:(CompletionBlock)completionBlock;
 
 /**
- *  从各种 h5 链接中拦截 h5 支付链接接口
+ *  从h5链接中获取订单串接口（自版本15.4.0起已废弃，请使用payInterceptorWithUrl...）
  *
  *  @param urlStr           需要被拦截解析的 h5 链接
  *
@@ -133,11 +164,11 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
 - (NSString*)fetchOrderInfoFromH5PayUrl:(NSString*)urlStr;
 
 /**
- *  h5链接获取到的订单串支付接口
+ *  h5链接获取到的订单串支付接口（自版本15.4.0起已废弃，请使用payInterceptorWithUrl...）
  *
  *  @param orderStr       支付订单信息字串
  *  @param schemeStr      调用支付的app注册在info.plist中的scheme
- *  @param compltionBlock 支付结果回调Block，用于wap支付结果回调（非跳转钱包支付）
+ *  @param completionBlock 支付结果回调Block，用于wap支付结果回调（非跳转钱包支付）
  */
 - (void)payUrlOrder:(NSString *)orderStr
          fromScheme:(NSString *)schemeStr
@@ -154,6 +185,7 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
  *  @return tid相关信息
  */
 - (NSString*)queryTidFactor:(AlipayTidFactor)factor;
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,10 +214,9 @@ typedef void(^CompletionBlock)(NSDictionary *resultDic);
 - (void)setUrl:(NSString *)url;
 
 /**
- *  设置视图展示环境UIWindow(如果没有自行创建window无需设置此接口)
+ *  支付前主动更新本地配置
  *
- *  @param payWindow  支付视图展示环境
+ *  @param block 更新请求结果回调
  */
-- (void)setPayWindow:(UIWindow *)payWindow;
-
+- (void)fetchSdkConfigWithBlock:(void(^)(BOOL success))block;
 @end
