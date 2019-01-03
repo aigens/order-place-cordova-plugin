@@ -11,12 +11,12 @@
 #import <OrderPlaceSDK/OrderPlaceSDK-Swift.h>
 @implementation AppDelegate (OrderPlaceSDK)
 + (void)load {
-    Method originalOpenURLWithSource = class_getClassMethod(self, @selector(application:openURL:sourceApplication:annotation:));
-    Method swizzledOpenURLWithSource = class_getClassMethod(self, @selector(swizzled_application:openURL:sourceApplication:annotation:));
+    Method originalOpenURLWithSource = class_getInstanceMethod(self, @selector(application:openURL:sourceApplication:annotation:));
+    Method swizzledOpenURLWithSource = class_getInstanceMethod(self, @selector(swizzled_application:openURL:sourceApplication:annotation:));
     method_exchangeImplementations(originalOpenURLWithSource, swizzledOpenURLWithSource);
     
-    Method originalOpenURL = class_getClassMethod(self, @selector(application:openURL:options:));
-    Method swizzledOpenURL = class_getClassMethod(self, @selector(swizzled_application:openURL:options:));
+    Method originalOpenURL = class_getInstanceMethod(self, @selector(application:openURL:options:));
+    Method swizzledOpenURL = class_getInstanceMethod(self, @selector(swizzled_application:openURL:options:));
     method_exchangeImplementations(originalOpenURL, swizzledOpenURL);
     
 }
