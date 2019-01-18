@@ -81,7 +81,8 @@
     <framework src="CoreMotion.framework" /> 
      <!-- order.place  depen-->
     <framework src="AVFoundation.framework" /> 
-    <framework src="PassKit.framework" /> 
+    <framework src="PassKit.framework" />
+    <framework src="AddressBook.framework" /> 
     <!-- <framework src="AddressBookUI.framework" />  -->
 
 
