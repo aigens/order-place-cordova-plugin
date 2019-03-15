@@ -57,11 +57,17 @@
     </config-file>
 
     <!-- add CFBundleURLTypes -->
-     <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+   <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
         <dict>
 		      <key>NSAllowsArbitraryLoads</key>
 		      <true/>
 	      </dict>
+    </config-file> 
+
+    <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+        <array>
+		     <string>weixin</string>
+	     </array>
     </config-file> 
 
        
@@ -85,10 +91,15 @@
     <framework src="AddressBook.framework" /> 
     <!-- <framework src="AddressBookUI.framework" />  -->
 
+    <!-- wechat  -->
+    <framework src="Security.framework" /> 
+    <framework src="libsqlite3.0.tbd" /> 
+    <framework src="src/ios/OrderPlaceWechatPaySDK.framework" custom="true" /> 
+    <source-file src="src/ios/libWeChatSDK.a" framework="true" />
+
 
     <framework src="src/ios/AlipaySDK.framework" custom="true" /> 
     <resource-file src="src/ios/AlipaySDK.bundle" /> 
-
     <framework src="src/ios/OrderPlaceAlipaySDK.framework" custom="true" /> 
     <framework src="src/ios/OrderPlaceSDK.framework" custom="true" /> 
     <header-file src="src/ios/AppDelegate+OrderPlaceSDK.h" />

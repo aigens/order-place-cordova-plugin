@@ -9,6 +9,7 @@
 #import "AppDelegate+OrderPlaceSDK.h"
 #import <objc/runtime.h>
 #import <OrderPlaceSDK/OrderPlaceSDK-Swift.h>
+#import <OrderPlaceWechatPaySDK/OrderPlaceWechatPaySDK-Swift.h>
 @implementation AppDelegate (OrderPlaceSDK)
 + (void)load {
     Method originalOpenURLWithSource = class_getInstanceMethod(self, @selector(application:openURL:sourceApplication:annotation:));
@@ -19,13 +20,22 @@
     Method swizzledOpenURL = class_getInstanceMethod(self, @selector(swizzled_application:openURL:options:));
     method_exchangeImplementations(originalOpenURL, swizzledOpenURL);
     
+    Method originalLaunching = class_getInstanceMethod(self, @selector(application:didFinishLaunchingWithOptions:));
+    Method swizzledLaunching = class_getInstanceMethod(self, @selector(swizzled_application:didFinishLaunchingWithOptions:));
+    method_exchangeImplementations(originalLaunching, swizzledLaunching);
 }
 
+- (BOOL)swizzled_application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
+    [self swizzled_application:application didFinishLaunchingWithOptions:launchOptions];
+    //NSLog(@"didFinishLaunchingWithOptions...");
+    [WechatExecutor application:application didFinishLaunchingWithOptions:launchOptions];
+    return YES;
+}
 /// NOTE: 9.0以后使用新API接口 , >= ios 9.0
 - (BOOL)swizzled_application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     [self swizzled_application:app openURL:url options:options];
     [OrderPlace application:app open:url];
-    NSLog(@"swizzled_application openURL:%@",url);
+//    NSLog(@"swizzled_application openURL:%@",url);
     
     return YES;
 }
@@ -35,7 +45,7 @@
     
     [OrderPlace application:application open:url];
     
-    NSLog(@"swizzled_application openURL sourceApplication:%@",url);
+    //NSLog(@"swizzled_application openURL sourceApplication:%@",url);
     return YES;
 }
 @end
