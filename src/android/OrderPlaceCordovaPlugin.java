@@ -68,7 +68,7 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
                 JSONObject result = new JSONObject();
 
                 switch (requestCode) {
-                    case (OrderPlace.REQUEST_CODE_OPEN_URL):
+                    case (10001):
                         try {
                             result.put("closeData", intent.getStringExtra("closeData"));
                         } catch (JSONException e) {
@@ -79,7 +79,7 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
                         pluginResult.setKeepCallback(true);
                         callbackContext.sendPluginResult(pluginResult);
                         break;
-                    case (OrderPlace.REQUEST_CODE_SCAN):
+                    case (10002):
                         try {
                             result.put("closeData", intent.getStringExtra("closeData"));
                         } catch (JSONException e) {
