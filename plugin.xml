@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="order-place-cordova-plugin" version="0.1.9">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="order-place-cordova-plugin" version="0.1.10">
    <name>Aigens Order Place SDK</name>
    <js-module name="order-place-cordova-plugin" src="www/order-place-cordova-plugin.js">
     <!--
