@@ -48,6 +48,8 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
             return false;
         }
 
+        cordova.setActivityResultCallback(this);
+        
         JSONObject result = new JSONObject();
         result.put("status", "success");
 
@@ -61,6 +63,7 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.d(TAG, "OrderPlaceCordovaPlugin onActivityResult: requestCode: " + requestCode +" resultCode: " + resultCode +"closeData: " + intent.getStringExtra("closeData"));
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (this.callbackContext != null) {
