@@ -8,3 +8,7 @@ exports.openUrl = function (success, error, params) {
 exports.scan = function (success, error, params) {
     cordova.exec(success, error, 'order-place-cordova-plugin', 'scan', [params]);
 };
+
+exports.scanDecode = function (success, error, params) {
+    cordova.exec(success, error, 'order-place-cordova-plugin', 'scanDecode', [params]);
+};

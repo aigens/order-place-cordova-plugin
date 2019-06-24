@@ -42,6 +42,12 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
             JSONObject params = args.optJSONObject(0);
 
             OrderPlace.scan(cordova.getActivity(), params);
+        } else if (action.equals("scanDecode")) {
+
+            JSONObject params = args.optJSONObject(0);
+
+            OrderPlace.scanDecode(cordova.getActivity(), params);
+
         } else {
 
             //callbackContext.error("no method " + action);
@@ -49,7 +55,7 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
         }
 
         cordova.setActivityResultCallback(this);
-        
+
         JSONObject result = new JSONObject();
         result.put("status", "success");
 
@@ -63,7 +69,7 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.d(TAG, "OrderPlaceCordovaPlugin onActivityResult: requestCode: " + requestCode +" resultCode: " + resultCode +"closeData: " + intent.getStringExtra("closeData"));
+        Log.d(TAG, "OrderPlaceCordovaPlugin onActivityResult: requestCode: " + requestCode + " resultCode: " + resultCode + "closeData: " + intent.getStringExtra("closeData"));
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (this.callbackContext != null) {
@@ -73,18 +79,21 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
                 switch (requestCode) {
                     case (10001):
                         try {
-                            result.put("closeData", intent.getStringExtra("closeData"));
+                            String jString = intent.getStringExtra("closeData");
+                            JSONObject closeData = new JSONObject(jString);
+                            result.put("closeData", closeData);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result);
                         pluginResult.setKeepCallback(true);
                         callbackContext.sendPluginResult(pluginResult);
                         break;
                     case (10002):
                         try {
-                            result.put("closeData", intent.getStringExtra("closeData"));
+                            String jString = intent.getStringExtra("closeData");
+                            JSONObject closeData = new JSONObject(jString);
+                            result.put("closeData", closeData);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -92,6 +101,17 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
                         PluginResult pluginResult2 = new PluginResult(PluginResult.Status.OK, result);
                         pluginResult2.setKeepCallback(true);
                         callbackContext.sendPluginResult(pluginResult2);
+                        break;
+                    case (10003):
+                        try {
+                            result.put("scanDecode", intent.getStringExtra("scanDecode"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        PluginResult pluginResult3 = new PluginResult(PluginResult.Status.OK, result);
+                        pluginResult3.setKeepCallback(true);
+                        callbackContext.sendPluginResult(pluginResult3);
                         break;
                     default:
                         break;
