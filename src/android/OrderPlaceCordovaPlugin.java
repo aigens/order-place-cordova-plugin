@@ -104,7 +104,7 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
                         break;
                     case (10003):
                         try {
-                            result.put("scanDecode", intent.getStringExtra("scanDecode"));
+                            result.put("decodeResult", intent.getStringExtra("scanDecode"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
