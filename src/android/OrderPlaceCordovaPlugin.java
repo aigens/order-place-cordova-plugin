@@ -69,7 +69,13 @@ public class OrderPlaceCordovaPlugin extends CordovaPlugin {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.d(TAG, "OrderPlaceCordovaPlugin onActivityResult: requestCode: " + requestCode + " resultCode: " + resultCode + "closeData: " + intent.getStringExtra("closeData"));
+        if (intent != null) {
+            try {
+                Log.d(TAG, "OrderPlaceCordovaPlugin onActivityResult: requestCode: " + requestCode + " resultCode: " + resultCode + "closeData: " + intent.getStringExtra("closeData"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (this.callbackContext != null) {
